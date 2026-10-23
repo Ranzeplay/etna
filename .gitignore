@@ -39,3 +39,9 @@ bin/
 tui
 
 data/**
+
+figures
+
+**/.idea
+
+**/dist*

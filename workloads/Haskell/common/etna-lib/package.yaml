@@ -13,6 +13,7 @@ dependencies:
     - bytestring
     - clock
     - regex-tdfa
+    - process
 
 library:
     source-dirs: src

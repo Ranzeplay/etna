@@ -7,6 +7,7 @@ dependencies:
     - smallcheck
     - leancheck
     - generic-random
+    - silently
 
 library:
     source-dirs: src
@@ -21,3 +22,10 @@ executables:
             - -with-rtsopts=-N
         dependencies:
             - etna-workload
+        c-sources:
+            - src/py_conn_ffi.c
+        include-dirs:
+            - src
+        cc-options: -fPIC
+        pkgconfig-depends:
+            - python3-embed >= 3.10

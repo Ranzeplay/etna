@@ -6,6 +6,7 @@ module Etna.Lib
     module Etna.Lib.Strategy.LeanCheck,
     module Etna.Lib.Strategy.SmallCheck,
     module Etna.Lib.Strategy.QuickCheck,
+    module Etna.Lib.Strategy.QuickCheckWithFandango,
   )
 where
 
@@ -16,3 +17,4 @@ import Etna.Lib.TH
 import Etna.Lib.Trial
 import Etna.Lib.Types
 import Etna.Lib.Util
+import Etna.Lib.Strategy.QuickCheckWithFandango

@@ -13,7 +13,7 @@ def analyze(results: str, images: str):
         os.makedirs(images)
 
     # Generate task bucket charts used in Figure 1.
-    for workload in ['BST', 'RBT', 'STLC', 'FSUB']:
+    for workload in ['BST']:
         times = partial(stacked_barchart_times, case=workload, df=df)
         times(
             strategies=['Quick', 'Lean', 'Small', 'Correct'],

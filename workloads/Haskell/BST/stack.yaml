@@ -3,6 +3,16 @@ compiler: ghc-9.0.2
 allow-newer: true
 system-ghc: true
 
+ghc-options:
+  "$everything": -fllvm -pgmlc /Users/jeb/Downloads/llvm-project-llvmorg-12.0.1/build/bin/llc -pgmlo /Users/jeb/Downloads/llvm-project-llvmorg-12.0.1/build/bin/opt
+
+extra-include-dirs:
+  - /opt/homebrew/opt/python@3.10/Frameworks/Python.framework/Versions/3.10/include/python3.10
+  - /opt/homebrew/opt/libffi/include
+extra-lib-dirs:
+  - /opt/homebrew/opt/python@3.10/Frameworks/Python.framework/Versions/3.10/lib
+  - /opt/homebrew/opt/libffi/lib
+
 packages:
     - .
     - ../common/etna-lib
