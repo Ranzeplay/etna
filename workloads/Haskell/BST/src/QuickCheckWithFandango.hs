@@ -73,26 +73,6 @@ qcfRunArb args app = qcfRunArb' args . qcfMakeProp app
 qcfRunArb' :: (Show a, Arbitrary a) => Args -> (a -> Property) -> IO Result
 qcfRunArb' args prop = qcfMakeResult $ quickCheckWithResult args prop
 
--- fandangoGen :: Read a => String -> Gen a
--- fandangoGen start = pure $ unsafePerformIO $ do
---     output <- readProcess "/Users/jeb/Workspace/hsk-demo/.venv/bin/fandango" ["fuzz", "-f", "./grammar.fan", "-n", "1", "-S", start] ""
---     return (trace ("Gen: " ++ output) $ read output)
-
--- fandangoGenKey :: Gen Key
--- fandangoGenKey = pure $ unsafePerformIO $ do
---     output <- readProcess "/Users/jeb/Workspace/hsk-demo/.venv/bin/fandango" ["fuzz", "-f", "./grammar.fan", "-n", "1", "-S", "<key>"] ""
---     return (trace ("GenKey: " ++ output) $ read output)
-
--- fandangoGenBST :: Gen BST
--- fandangoGenBST = pure $ unsafePerformIO $ do
---     output <- readProcess "/Users/jeb/Workspace/hsk-demo/.venv/bin/fandango" ["fuzz", "-f", "./grammar.fan", "-n", "1", "-S", "<tree>"] ""
---     return (trace ("GenBST: " ++ output) $ read output)
-
--- fandangoGenVal :: Gen Val
--- fandangoGenVal = pure $ unsafePerformIO $ do
---     output <- readProcess "/Users/jeb/Workspace/hsk-demo/.venv/bin/fandango" ["fuzz", "-f", "./grammar.fan", "-n", "1", "-S", "<val>"] ""
---     return (trace ("GenVal: " ++ output) $ read output)
-
 fandangoGenKey :: Gen Key
 fandangoGenKey = traceChoice "GenKey" <$> fandangoGen "<key>"
 

@@ -55,7 +55,7 @@ class FandangoIterative(Fandango):
 
         return results
 
-fandango_file_path = "/Users/jeb/Repos/etna/workloads/Haskell/BST/grammar.fan"
+fandango_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "grammar.fan")
 
 _fan_by_start: dict[str, FandangoIterative] = {}
 
