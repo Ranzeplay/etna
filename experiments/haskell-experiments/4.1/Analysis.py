@@ -16,9 +16,9 @@ def analyze(results: str, images: str):
     for workload in ['BST']:
         times = partial(stacked_barchart_times, case=workload, df=df)
         times(
-            strategies=['Quick', 'Lean', 'Small', 'Correct'],
-            colors=['#000000', '#D61C4E', '#6D0E56', '#243763'],
-            limits=[0.1, 1, 10, 60],
+            strategies=['Quick', 'Lean', 'Small', 'Correct', 'Fandango'],
+            colors=['#000000', '#D61C4E', '#6D0E56', '#243763', '#8B4513'],
+            limits=[0.1, 1, 10, 60, 60],
             limit_type='time',
             image_path=images,
             show=False,
