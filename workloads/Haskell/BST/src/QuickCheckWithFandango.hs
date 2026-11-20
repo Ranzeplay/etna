@@ -12,6 +12,7 @@ module QuickCheckWithFandango
     qcfMakeProp,
     qcfMakeResult,
     qcfRunArb,
+    qcfRunArbFandango,
     qcfRunArb',
     -- fandangoGen,
     fandangoGenBST,
@@ -70,6 +71,11 @@ qcfMakeResult ioresult = do
 qcfRunArb :: (Show a, Arbitrary a) => Args -> Approach -> Strategy a
 qcfRunArb args app = qcfRunArb' args . qcfMakeProp app
 
+qcfRunArbFandango :: (Show a, Arbitrary a) => Bool -> Args -> Approach -> Strategy a
+qcfRunArbFandango maximizing args app task = do
+  writeIORef maximizingRef maximizing
+  qcfRunArb args app task
+
 qcfRunArb' :: (Show a, Arbitrary a) => Args -> (a -> Property) -> IO Result
 qcfRunArb' args prop = qcfMakeResult $ quickCheckWithResult args prop
 
@@ -91,13 +97,14 @@ fandangoGen start = MkGen $ \r n ->
   r `seq` n `seq`
     unsafePerformIO $ do
       ensureSetup
-      sample <- fandangoNext start
+      maximizing <- readIORef maximizingRef
+      sample <- fandangoNext start maximizing
       pure $ trace (start ++ " sample: " ++ show sample) sample
 
-fandangoNext :: Read a => String -> IO a
-fandangoNext start = do
+fandangoNext :: Read a => String -> Bool -> IO a
+fandangoNext start maximizing = do
   raw <- withCString start $ \cStart -> do
-    cStr <- c_inc_gen_with_start cStart
+    cStr <- c_inc_gen_with_start cStart (if maximizing then 1 else 0)
     if cStr == nullPtr
       then fail ("fandango FFI returned NULL for " ++ start)
       else do
@@ -117,6 +124,10 @@ parseSample tag raw =
 setupRef :: IORef Bool
 setupRef = unsafePerformIO (newIORef False)
 
+{-# NOINLINE maximizingRef #-}
+maximizingRef :: IORef Bool
+maximizingRef = unsafePerformIO (newIORef False)
+
 ensureSetup :: IO ()
 ensureSetup = do
   already <- readIORef setupRef
@@ -126,6 +137,6 @@ ensureSetup = do
     writeIORef setupRef True
 
 foreign import ccall safe "setup" c_setup :: IO CInt
-foreign import ccall safe "inc_gen_with_start" c_inc_gen_with_start :: CString -> IO CString
+foreign import ccall safe "inc_gen_with_start" c_inc_gen_with_start :: CString -> CInt -> IO CString
 
 newtype Fandango a = Fandango a deriving (Read, Show)

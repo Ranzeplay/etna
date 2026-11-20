@@ -233,7 +233,7 @@ error:
     return 1;
 }
 
-static char* inc_gen_impl(const char* start_symbol) {
+static char* inc_gen_impl(const char* start_symbol, int maximizing) {
     if (!fuzz_next) {
         printf("Python not initialized (fuzz_next is NULL)\n");
         return NULL;
@@ -254,8 +254,18 @@ static char* inc_gen_impl(const char* start_symbol) {
         return NULL;
     }
 
-    PyObject *next_args = PyTuple_Pack(2, start_obj, count_obj);
+    PyObject *maximizing_obj = PyBool_FromLong(maximizing);
+    if (!maximizing_obj) {
+        printf("Failed to create maximizing flag\n");
+        PyErr_Print();
+        Py_DECREF(start_obj);
+        Py_DECREF(count_obj);
+        return NULL;
+    }
+
+    PyObject *next_args = PyTuple_Pack(3, start_obj, count_obj, maximizing_obj);
     Py_DECREF(start_obj);
+    Py_DECREF(maximizing_obj);
     Py_DECREF(count_obj);
     if (!next_args) {
         printf("Failed to build fuzz_next arguments\n");
@@ -304,12 +314,12 @@ static char* inc_gen_impl(const char* start_symbol) {
     return strdup(utf8);
 }
 
-char* inc_gen_with_start(const char* start_symbol) {
-    return inc_gen_impl(start_symbol);
+char* inc_gen_with_start(const char* start_symbol, int maximizing) {
+    return inc_gen_impl(start_symbol, maximizing);
 }
 
 char* inc_gen() {
-    return inc_gen_impl("<start>");
+    return inc_gen_impl("<start>", 0);
 }
 
 int teardown() {

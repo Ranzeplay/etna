@@ -7,7 +7,9 @@
 <key> ::= "Key " <decimal_integer>
 <value> ::= "Val " ("True" | "False")
 
-<tree> ::= "T " ( "(" <tree> ")" | "E") " (" <key> ") (" <value> ") " ( "(" <tree> ")" | "E" )
+<tree> ::= "T " <left_tree> " (" <key> ") (" <value> ") " <right_tree>
+<left_tree> ::= "(" <tree> ")" | "E"
+<right_tree> ::= "(" <tree> ")" | "E"
 
 <start> ::= <tree>
 

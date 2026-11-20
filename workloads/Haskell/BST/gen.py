@@ -56,18 +56,21 @@ class FandangoIterative(Fandango):
         return results
 
 fandango_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "grammar.fan")
+guided_fandango_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "grammar_guided.fan")
 
-_fan_by_start: dict[str, FandangoIterative] = {}
+_fan_by_start: dict[tuple[str, bool], FandangoIterative] = {}
 
-def _get_fan(start_symbol: str) -> FandangoIterative:
-    fan = _fan_by_start.get(start_symbol)
+def _get_fan(start_symbol: str, maximizing: bool) -> FandangoIterative:
+    key = (start_symbol, maximizing)
+    fan = _fan_by_start.get(key)
     if fan is None:
-        with open(fandango_file_path, "r") as f:
+        grammar_path = guided_fandango_file_path if maximizing else fandango_file_path
+        with open(grammar_path, "r") as grammar_file:
             # Use a smaller population size to avoid warnings with constrained grammars
-            fan = FandangoIterative(f, start_symbol=start_symbol, logging_level=logging.ERROR)
-        _fan_by_start[start_symbol] = fan
+            fan = FandangoIterative(grammar_file, start_symbol=start_symbol, logging_level=logging.ERROR)
+        _fan_by_start[key] = fan
     return fan
 
-def fuzz_next(start_symbol: str, count: int = 1) -> list[DerivationTree]:
-    fan = _get_fan(start_symbol)
+def fuzz_next(start_symbol: str, count: int = 1, maximizing: bool = False) -> list[DerivationTree]:
+    fan = _get_fan(start_symbol, maximizing)
     return fan.fuzz_next(count)

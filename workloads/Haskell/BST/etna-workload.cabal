@@ -15,6 +15,7 @@ library
       Spec
       Strategy.Correct
       Strategy.Fandango
+      Strategy.FandangoGuided
       Strategy.Lean
       Strategy.LeanRev
       Strategy.Quick

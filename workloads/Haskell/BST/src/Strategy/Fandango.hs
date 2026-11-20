@@ -43,7 +43,7 @@ instance Arbitrary Val where
     return $ trace ("Arb: " ++ show v) v
 
 $( mkStrategies
-     [|qcfRunArb qcfDefaults Naive|]
+     [|qcfRunArbFandango False qcfDefaults Naive|]
      [ 'prop_InsertValid,
        'prop_DeleteValid,
        'prop_UnionValid,
