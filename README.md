@@ -17,6 +17,9 @@ Please see `DOCUMENTATION.md` to learn more about these details.
 
 ### Language Dependencies
 
+For local Python setup with separate virtual environments for the experiment
+driver and the Haskell BST Fandango generator, see [`SETUP.md`](SETUP.md).
+
 **These steps should already be completed in the VM.**
 
 1. For Python, install version 3.10.5,
