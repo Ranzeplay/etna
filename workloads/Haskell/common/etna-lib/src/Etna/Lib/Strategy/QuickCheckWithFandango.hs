@@ -10,7 +10,6 @@ module Etna.Lib.Strategy.QuickCheckWithFandango
     qcfMakeResult,
     qcfRunArb,
     qcfRunArb',
-    fandangoGen,
     Fandango(..),
   )
 where
@@ -58,9 +57,6 @@ qcfRunArb args app = qcfRunArb' args . qcMakeProp app
 
 qcfRunArb' :: (Show a, Arbitrary a) => Args -> (a -> Property) -> IO Result
 qcfRunArb' args prop = qcfMakeResult $ quickCheckWithResult args prop
-
-fandangoGen :: Read a => String -> Gen a
-fandangoGen start = pure (read (unsafePerformIO (readProcess "fandango" ["fuzz", "-f", "/Users/jeb/Repos/etna/workloads/Haskell/common/etna-lib/grammar.fan", "-n", "1", "-S", start] "")))
 
 ---------
 

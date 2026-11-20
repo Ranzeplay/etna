@@ -55,7 +55,7 @@ class FandangoIterative(Fandango):
 
         return results
 
-fandango_file_path = "/Users/jeb/Repos/etna/workloads/Haskell/common/etna-lib/grammar.fan"
+fandango_file_path = "/Users/jeb/Repos/etna/workloads/Haskell/BST/grammar.fan"
 
 _fan_by_start: dict[str, FandangoIterative] = {}
 
