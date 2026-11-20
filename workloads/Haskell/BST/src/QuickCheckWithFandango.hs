@@ -77,7 +77,7 @@ fandangoGenKey :: Gen Key
 fandangoGenKey = traceChoice "GenKey" <$> fandangoGen "<key>"
 
 fandangoGenBST :: Gen BST
-fandangoGenBST = traceChoice "GenBST" <$> fandangoGen "<tree>"
+fandangoGenBST = traceChoice "GenBST" <$> fandangoGen "<start>"
 
 fandangoGenVal :: Gen Val
 fandangoGenVal = traceChoice "GenVal" <$> fandangoGen "<value>"
