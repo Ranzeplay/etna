@@ -45,3 +45,5 @@ figures
 **/.idea
 
 **/dist*
+
+.stack/
