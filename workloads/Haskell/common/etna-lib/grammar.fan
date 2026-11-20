@@ -8,3 +8,11 @@
 <value> ::= "Val " ("True" | "False")
 
 <tree> ::= "T " ( "(" <tree> ")" | "E") " (" <key> ") (" <value> ") " ( "(" <tree> ")" | "E" )
+
+<start> ::= <tree>
+
+where forall <t> in <tree>:
+    int(<t>.<left_tree>..<decimal_integer>) < int(<t>.<key>.<decimal_integer>)
+
+where forall <t> in <tree>:
+    int(<t>.<right_tree>..<decimal_integer>) > int(<t>.<key>.<decimal_integer>)

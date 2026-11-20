@@ -28,4 +28,4 @@ executables:
             - src
         cc-options: -fPIC
         pkgconfig-depends:
-            - python3-embed >= 3.10
+            - python-3.14-embed >= 3.14

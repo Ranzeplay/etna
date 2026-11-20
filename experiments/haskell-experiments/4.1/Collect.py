@@ -23,7 +23,7 @@ def collect(results: str):
             run_trial = None
 
             for strategy in tool.all_strategies(workload):
-                if strategy.name not in ['Correct', 'Quick', 'Lean', 'Small', 'Fandango']:
+                if strategy.name not in ['Fandango']:
                     continue
 
                 for property in tool.all_properties(workload):

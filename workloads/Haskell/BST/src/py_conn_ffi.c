@@ -239,7 +239,7 @@ static char* inc_gen_impl(const char* start_symbol) {
         return NULL;
     }
 
-    PyObject *start_obj = PyUnicode_FromString(start_symbol ? start_symbol : "<tree>");
+    PyObject *start_obj = PyUnicode_FromString(start_symbol ? start_symbol : "<start>");
     if (!start_obj) {
         printf("Failed to create start symbol string\n");
         PyErr_Print();
@@ -309,7 +309,7 @@ char* inc_gen_with_start(const char* start_symbol) {
 }
 
 char* inc_gen() {
-    return inc_gen_impl("<tree>");
+    return inc_gen_impl("<start>");
 }
 
 int teardown() {
